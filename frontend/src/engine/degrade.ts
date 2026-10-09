@@ -3,13 +3,13 @@
  * 降级按固定顺序 L1（放开院校层次下限）→ L2（扩大地域），全程明示、禁止静默；
  * 本模块不触碰黑名单——黑名单在 planBuilder 中先行硬过滤，绝不进入降级。
  */
-import provincesJson from '@/data/config/provinces.json';
+
 import thresholdsJson from '@/data/config/thresholds.json';
+import { expandRegion } from '@/data/regionUtils';
 import type { Candidate, DegradeStep } from '@/types/candidate';
-import type { RegionTagMap, SchoolFloor, Preferences } from '@/types/preference';
+import type { SchoolFloor, Preferences } from '@/types/preference';
 
 const T = thresholdsJson;
-const REGION_TAGS = (provincesJson as { regionTags: RegionTagMap }).regionTags;
 
 /** 院校层次量化（越大越优）；办学性质：民办为 0 层 */
 const TIER_LEVEL: Record<Candidate['tier'], number> = {
@@ -29,10 +29,6 @@ const FLOOR_LEVEL: Record<SchoolFloor, number> = {
   985: 4,
 };
 
-/** 经济圈标签展开：'大湾区' → 成员城市；其余原样返回 */
-export function expandRegion(region: string): string[] {
-  return REGION_TAGS[region] ?? [region];
-}
 
 /** 层次/办学性质是否通过 */
 function tierOk(cand: Candidate, prefs: Preferences): boolean {
@@ -102,3 +98,4 @@ export function degrade(
   steps.push({ level: 'L2', desc: T.degrade.descriptions.L2 });
   return { candidates: result, steps };
 }
+

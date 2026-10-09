@@ -68,7 +68,7 @@ export function IcMe({ color = 'var(--c-ink)', size = 22, active = false }: Icon
   );
 }
 
-export function IcChevron({ color = '#9FB6C9', size = 18 }: IconProps) {
+export function IcChevron({ color = 'var(--c-icon-muted)', size = 18 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path
@@ -102,7 +102,7 @@ export function IcCheck({ color = 'var(--c-sky)', size = 16 }: IconProps) {
       <circle cx="12" cy="12" r="10" fill={color} />
       <path
         d="m8 12.2 2.6 2.6 5.2-5.6"
-        stroke="#fff"
+        stroke="var(--c-white)"
         strokeWidth="2.2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -129,7 +129,7 @@ export function IcPin({ color = 'var(--c-sub)', size = 13 }: IconProps) {
   );
 }
 
-export function IcPlay({ color = '#fff', size = 17 }: IconProps) {
+export function IcPlay({ color = 'var(--c-white)', size = 17 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M7 5.5v13M7 5.5 16.5 12 7 18.5v-13z" fill={color} />
@@ -144,3 +144,4 @@ export function IcSend({ color = 'var(--c-sky)', size = 18 }: IconProps) {
     </svg>
   );
 }
+

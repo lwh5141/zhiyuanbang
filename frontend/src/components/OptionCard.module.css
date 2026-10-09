@@ -3,7 +3,7 @@
   position: relative;
   width: 100%;
   text-align: left;
-  background: #fff;
+  background: var(--c-white);
   border: 1.5px solid var(--c-line);
   border-radius: 13px;
   padding: 13px 14px;
@@ -11,7 +11,7 @@
 }
 
 .cardOn {
-  background: rgba(45, 156, 219, 0.1);
+  background: var(--c-sky-a10);
   border-color: var(--c-sky);
 }
 
@@ -54,12 +54,12 @@
 }
 
 .disabled .subtitle {
-  color: #a9bdcb;
+  color: var(--c-muted-alt);
 }
 
 /* 胶囊（再选科目，原型 pill 口径） */
 .pill {
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: 999px;
   padding: 5px 13px;
@@ -69,7 +69,7 @@
 }
 
 .pillOn {
-  background: rgba(39, 196, 147, 0.12);
-  border-color: rgba(39, 196, 147, 0.4);
+  background: var(--c-mint-a12);
+  border-color: var(--c-mint-a12);
   color: var(--c-mint-deep);
 }

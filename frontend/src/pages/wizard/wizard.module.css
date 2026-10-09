@@ -21,7 +21,7 @@
 
 /* 回显确认条（S1 顶部，默认来自草稿） */
 .echo {
-  background: rgba(45, 156, 219, 0.08);
+  background: var(--c-sky-a08);
   border-radius: 10px;
   padding: 8px 12px;
   font-size: 12.5px;
@@ -40,7 +40,7 @@
   text-align: center;
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: var(--c-white);
   box-shadow: var(--shadow-btn);
 }
 
@@ -70,8 +70,8 @@
 
 /* 蓝色提示卡（位次反查等） */
 .infoCard {
-  background: rgba(45, 156, 219, 0.09);
-  border: 1px solid rgba(45, 156, 219, 0.3);
+  background: var(--c-sky-a08);
+  border: 1px solid var(--c-sky-fill);
   border-radius: var(--radius-card);
   padding: 14px 15px;
   margin-top: 16px;
@@ -101,7 +101,7 @@
 /* 蓝色提示卡内引用块（位次证据原文，REQ-002） */
 .sourceQuote {
   margin-top: 9px;
-  background: #fff;
+  background: var(--c-white);
   border-radius: 9px;
   padding: 8px 11px;
   font-size: 11.5px;
@@ -111,7 +111,7 @@
 
 /* 输入卡（总分/单科/覆盖位次） */
 .inputCard {
-  background: #fff;
+  background: var(--c-white);
   border: 1.5px solid var(--c-line);
   border-radius: var(--radius-card);
   padding: 14px 16px;
@@ -137,7 +137,7 @@
 }
 
 .subPanel {
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: 12px;
   padding: 12px 14px;
@@ -217,7 +217,7 @@
 
 .tuneBtn {
   flex: 1;
-  background: #fff;
+  background: var(--c-white);
   border: 1.5px solid var(--c-line);
   border-radius: 11px;
   padding: 9px 0;
@@ -228,14 +228,14 @@
 }
 
 .tuneBtnOn {
-  background: rgba(45, 156, 219, 0.1);
+  background: var(--c-sky-a10);
   border-color: var(--c-sky);
   color: var(--c-sky-deep);
 }
 
 /* 预览卡 */
 .previewCard {
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: var(--radius-card);
   padding: 14px 15px;

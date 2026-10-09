@@ -66,7 +66,7 @@ export default function Step5Identity() {
 
   const submit = () => {
     dispatch({ type: 'GOTO_STEP', step: 6 as Draft['step'] });
-    navigate('/plan');
+    navigate('/wizard/6');
   };
 
   return (

@@ -8,7 +8,7 @@
 
 .policyHint {
   margin-top: 6px;
-  background: rgba(45, 156, 219, 0.08);
+  background: var(--c-sky-a08);
   border-radius: 9px;
   padding: 7px 11px;
   font-size: 11.5px;
@@ -18,8 +18,8 @@
 
 .completenessCard {
   margin-top: 18px;
-  background: rgba(39, 196, 147, 0.1);
-  border: 1px solid rgba(39, 196, 147, 0.32);
+  background: var(--c-mint-a10);
+  border: 1px solid var(--c-mint-a12);
   border-radius: var(--radius-card);
   padding: 13px 15px;
 }
@@ -38,7 +38,7 @@
 .completenessBar {
   margin-top: 8px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--c-white-a70);
   border-radius: 3px;
   overflow: hidden;
 }

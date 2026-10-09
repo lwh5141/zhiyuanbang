@@ -1,3 +1,4 @@
+import type { SubjectCode } from './profile';
 /** 志愿候选与方案领域类型（引擎的输入与输出） */
 
 /** 四梯度 */
@@ -95,3 +96,4 @@ export interface Plan {
   /** 致无解条件说明 + 放宽建议 */
   noMatchReasons: string[];
 }
+

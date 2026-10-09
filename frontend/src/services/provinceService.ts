@@ -30,7 +30,6 @@ export function getRegionTags(): RegionTagMap {
   return DATA.regionTags;
 }
 
-/** 展开单个地域标签：'大湾区' → 成员城市数组；普通城市原样返回 */
-export function expandRegionTag(region: string): string[] {
-  return DATA.regionTags[region] ?? [region];
-}
+export { expandRegion as expandRegionTag } from '@/data/regionUtils';
+
+

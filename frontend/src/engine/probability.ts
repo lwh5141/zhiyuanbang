@@ -47,7 +47,7 @@ export function classifyGradient(p: number): Gradient {
 export function confidenceScore(noHistory: boolean, planChangePct: number): number {
   let c = T.confidence.base;
   if (noHistory) c -= T.confidence.noHistoryPenalty;
-  if (Math.abs(planChangePct) > 20) c -= T.confidence.planChangePenalty;
+  if (Math.abs(planChangePct) > T.confidence.planChangeThreshold) c -= T.confidence.planChangePenalty;
   return Math.max(T.confidence.min, c);
 }
 
@@ -59,3 +59,4 @@ export function factorText(
 ): string {
   return `位次正态 μ${Math.round(pastRankMid).toLocaleString()}/σ${Math.round(sigma)} ∩ 历史频率 ${Math.round(historyFreq)}%`;
 }
+

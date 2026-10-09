@@ -29,7 +29,35 @@
   --c-safe: #27c493;       /* 保 */
   --c-base: #7c9cbf;       /* 垫 */
 
-  /* 字体：系统栈（禁止在线字体） */
+
+  /* 白色与透明变体 */
+  --c-white: #ffffff;
+  --c-white-a30: rgba(255, 255, 255, 0.30);
+  --c-white-a70: rgba(255, 255, 255, 0.70);
+  --c-white-a90: rgba(255, 255, 255, 0.90);
+  --c-white-a96: rgba(255, 255, 255, 0.96);
+
+  /* 主题色透明变体 */
+  --c-sky-a08: rgba(45, 156, 219, 0.08);
+  --c-sky-a10: rgba(45, 156, 219, 0.10);
+  --c-sky-a14
+  --c-sky-a12: rgba(45, 156, 219, 0.12);: rgba(45, 156, 219, 0.14);
+  --c-mint-a10: rgba(39, 196, 147, 0.10);
+  --c-mint-a12: rgba(39, 196, 147, 0.12);
+  --c-sky-ink-a18: rgba(14, 76, 119, 0.18);
+  --c-sky-ink-a25: rgba(14, 76, 119, 0.25);
+  --c-rush-a08: rgba(255, 159, 67, 0.08);
+  --c-rush-a10: rgba(255, 159, 67, 0.10);
+  --c-ink-a42: rgba(14, 40, 62, 0.42);
+  --c-danger-a35: rgba(217, 83, 79, 0.35);
+
+  /* 补充文字/背景色 */
+  --c-rush-text: #c96f14;
+  --c-bg-alt: #e2ecf3;
+  --c-muted-alt: #a9bdcb;
+  --c-base-a18: rgba(124, 156, 191, 0.18);
+  --c-ink-a88: rgba(22, 50, 74, 0.88);
+    /* 字体：系统栈（禁止在线字体） */
   --font-sys: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
     'Microsoft YaHei', 'Segoe UI', sans-serif;
 
@@ -46,3 +74,5 @@
   --grad-sky: linear-gradient(178deg, #2d9cdb 0%, #56b7e8 42%, #a8dff5 76%, #eaf7fd 100%);
   --grad-progress: linear-gradient(90deg, var(--c-sky), var(--c-mint));
 }
+
+

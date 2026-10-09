@@ -1,6 +1,6 @@
 /**
  * 方案页：档案胶囊、完整度提示、四梯度统计卡、降级明示、志愿卡列表、合规标注。
- * 三种守卫态：信息不足 → 引导回向导；候选=0 → NoMatchDiagnosis；黑名单拦截 → BlacklistGate（不可绕过）。
+ * 两种守卫态：信息不足 → 引导回向导；候选=0 → NoMatchDiagnosis。黑名单拦截在 /wizard/6 完成。
  */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,6 @@ import { buildPlanFor } from '@/services/planService';
 import { getProvinceByCode } from '@/services/provinceService';
 import { useApp } from '@/store/AppContext';
 import type { Plan } from '@/types/candidate';
-import BlacklistGate from './wizard/BlacklistGate';
 import NoMatchDiagnosis from './wizard/NoMatchDiagnosis';
 import styles from './PlanPage.module.css';
 
@@ -33,8 +32,6 @@ export default function PlanPage() {
 
   const [plan, setPlan] = useState<Plan | null>(null);
   const [loading, setLoading] = useState(true);
-  /** 黑名单确认页「继续拦截」确认态（不可绕过：刷新后重新拦截） */
-  const [gateAck, setGateAck] = useState(false);
 
   const ready =
     profile.province !== undefined &&
@@ -75,7 +72,7 @@ export default function PlanPage() {
           <button type="button" className={`${styles.back} tap`} onClick={goBackHome} aria-label="返回">
             <IcBack />
           </button>
-          <div className={styles.headerTitle}>我的方案 · 示意</div>
+          <div className={styles.headerTitle}>我的方案 · 演示数据</div>
         </div>
         <div className={styles.body}>
           <div className={styles.emptyCard}>
@@ -100,7 +97,7 @@ export default function PlanPage() {
         <button type="button" className={`${styles.back} tap`} onClick={goBackHome} aria-label="返回">
           <IcBack />
         </button>
-        <div className={styles.headerTitle}>我的方案 · 示意</div>
+        <div className={styles.headerTitle}>我的方案 · 演示数据</div>
       </div>
 
       <div className={styles.body}>
@@ -118,17 +115,7 @@ export default function PlanPage() {
           <>
             {/* 候选=0 → 诊断页（禁止静默降级） */}
             {plan.isEstimate ? (
-              <NoMatchDiagnosis reasons={plan.noMatchReasons} onBack={() => navigate('/wizard/3')} />
-            ) : /* 黑名单拦截确认页（不可绕过） */
-            plan.blacklistBlocked > 0 && !gateAck ? (
-              <BlacklistGate
-                plan={plan}
-                currentBlacklist={preferences.majorBlacklist}
-                onContinue={() => setGateAck(true)}
-                onRemove={(remaining) => {
-                  dispatch({ type: 'UPDATE_PREFS', patch: { majorBlacklist: remaining } });
-                }}
-              />
+              <NoMatchDiagnosis reasons={plan.noMatchReasons} onBack={() => navigate('/wizard/4')} />
             ) : (
               <>
                 {/* 完整度提示（非必填拦路） */}
@@ -184,3 +171,6 @@ export default function PlanPage() {
     </div>
   );
 }
+
+
+

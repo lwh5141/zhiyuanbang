@@ -2,7 +2,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(14, 40, 62, 0.42);
+  background: var(--c-ink-a42);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,12 +11,12 @@
 }
 
 .card {
-  background: #fff;
+  background: var(--c-white);
   border-radius: 16px;
   padding: 18px 18px 14px;
   width: 100%;
   max-width: 340px;
-  box-shadow: 0 12px 40px rgba(14, 40, 62, 0.25);
+  box-shadow: 0 12px 40px var(--c-ink-a42);
 }
 
 .title {
@@ -74,7 +74,7 @@
 
 .confirm {
   background: var(--c-sky);
-  color: #fff;
+  color: var(--c-white);
   box-shadow: var(--shadow-btn);
 }
 

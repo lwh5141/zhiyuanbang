@@ -1,7 +1,7 @@
 /* 候选=0 诊断页 */
 .diag {
   background: var(--c-card);
-  border: 1.5px solid rgba(217, 83, 79, 0.35);
+  border: 1.5px solid var(--c-danger-a35);
   border-radius: var(--radius-card);
   padding: 18px 16px 14px;
   margin-top: 16px;
@@ -53,7 +53,7 @@
   margin-top: 14px;
   width: 100%;
   background: var(--c-sky);
-  color: #fff;
+  color: var(--c-white);
   border-radius: var(--radius-btn);
   padding: 12px 0;
   font-size: 14px;

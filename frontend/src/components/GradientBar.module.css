@@ -17,7 +17,7 @@
 
 .seg span {
   font-size: 10.5px;
-  color: #fff;
+  color: var(--c-white);
   font-weight: 700;
 }
 

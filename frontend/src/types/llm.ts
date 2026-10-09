@@ -3,6 +3,7 @@
  * 防线：输出必须过 schema 校验 + 枚举白名单；数字类输出一律拒绝；失败回退表单不阻塞。
  */
 import type { WeightPreset } from './preference';
+export type { WeightPreset } from './preference';
 
 export interface LlmParseRequest {
   /** 用户自然语言意向原文 */
@@ -27,3 +28,4 @@ export interface LlmParseResponse {
   data?: LlmIntention;
   message?: string;
 }
+

@@ -6,7 +6,7 @@
 }
 
 .header {
-  background: #fff;
+  background: var(--c-white);
   padding: 12px 16px;
   border-bottom: 1px solid var(--c-line);
   display: flex;
@@ -59,7 +59,7 @@
   margin-top: 14px;
   width: 100%;
   background: var(--c-sky);
-  color: #fff;
+  color: var(--c-white);
   border-radius: var(--radius-btn);
   padding: 13px 0;
   font-size: 15px;
@@ -68,8 +68,8 @@
 }
 
 .completeness {
-  background: rgba(39, 196, 147, 0.1);
-  border: 1px solid rgba(39, 196, 147, 0.32);
+  background: var(--c-mint-a10);
+  border: 1px solid var(--c-mint-a12);
   border-radius: 11px;
   padding: 9px 13px;
   margin-top: 12px;
@@ -79,8 +79,8 @@
 }
 
 .degraded {
-  background: rgba(255, 159, 67, 0.1);
-  border: 1px solid rgba(255, 159, 67, 0.35);
+  background: var(--c-rush-a10);
+  border: 1px solid var(--c-rush-a10);
   border-radius: 11px;
   padding: 10px 13px;
   margin-top: 12px;
@@ -89,7 +89,7 @@
 .degradedTitle {
   font-size: 12px;
   font-weight: 700;
-  color: #c96f14;
+  color: var(--c-rush-text);
 }
 
 .degradedItem {
@@ -105,7 +105,7 @@
 .degradedLevel {
   flex-shrink: 0;
   background: var(--c-rush);
-  color: #fff;
+  color: var(--c-white);
   font-size: 10.5px;
   font-weight: 700;
   border-radius: 6px;
@@ -120,7 +120,7 @@
 
 .statCard {
   flex: 1;
-  background: #fff;
+  background: var(--c-white);
   border-radius: 12px;
   padding: 9px 0;
   text-align: center;

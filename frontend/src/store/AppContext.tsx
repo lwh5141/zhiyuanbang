@@ -6,6 +6,7 @@
  */
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -32,7 +33,15 @@ export type AppAction =
   | { type: 'GOTO_STEP'; step: Draft['step'] }
   | { type: 'RESET' };
 
-function reducer(state: Draft, action: AppAction): Draft {
+/** 内部动作（wrapper 注入 updatedAt 后使用） */
+type InternalAction =
+  | { type: 'HYDRATE'; draft: Draft }
+  | { type: 'UPDATE_PROFILE'; patch: Partial<Profile>; updatedAt: string }
+  | { type: 'UPDATE_PREFS'; patch: Partial<Preferences>; updatedAt: string }
+  | { type: 'GOTO_STEP'; step: Draft['step']; updatedAt: string }
+  | { type: 'RESET' };
+
+function reducer(state: Draft, action: InternalAction): Draft {
   switch (action.type) {
     case 'HYDRATE':
       return action.draft;
@@ -40,16 +49,16 @@ function reducer(state: Draft, action: AppAction): Draft {
       return {
         ...state,
         profile: { ...state.profile, ...action.patch },
-        updatedAt: new Date().toISOString(),
+        updatedAt: action.updatedAt,
       };
     case 'UPDATE_PREFS':
       return {
         ...state,
         preferences: { ...state.preferences, ...action.patch },
-        updatedAt: new Date().toISOString(),
+        updatedAt: action.updatedAt,
       };
     case 'GOTO_STEP':
-      return { ...state, step: action.step, updatedAt: new Date().toISOString() };
+      return { ...state, step: action.step, updatedAt: action.updatedAt };
     case 'RESET':
       return createEmptyDraft();
     default:
@@ -67,7 +76,7 @@ interface AppContextValue {
 const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [draft, dispatch] = useReducer(reducer, undefined, createEmptyDraft);
+  const [draft, rawDispatch] = useReducer(reducer, undefined, createEmptyDraft);
   const [hydrated, setHydrated] = useState(false);
   const hydratedRef = useRef(false);
 
@@ -76,7 +85,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     let alive = true;
     void loadDraft().then((saved) => {
       if (!alive) return;
-      if (saved) dispatch({ type: 'HYDRATE', draft: saved });
+      if (saved) rawDispatch({ type: 'HYDRATE', draft: saved });
       hydratedRef.current = true;
       setHydrated(true);
     });
@@ -91,7 +100,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     debounceSave(draft);
   }, [draft]);
 
-  const value = useMemo(() => ({ draft, dispatch, hydrated }), [draft, hydrated]);
+  const wrappedDispatch = useCallback((action: AppAction) => {
+    if (action.type === 'UPDATE_PROFILE' || action.type === 'UPDATE_PREFS' || action.type === 'GOTO_STEP') {
+      rawDispatch({ ...action, updatedAt: new Date().toISOString() });
+    } else {
+      rawDispatch(action);
+    }
+  }, []);
+
+  const value = useMemo(() => ({ draft, dispatch: wrappedDispatch, hydrated }), [draft, wrappedDispatch, hydrated]);
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

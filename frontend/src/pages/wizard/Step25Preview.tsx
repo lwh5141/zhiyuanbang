@@ -4,15 +4,33 @@
  */
 import { useEffect, useState } from 'react';
 import { fetchPastPlans, type PastPlanTier } from '@/services/sampleService';
+import { lookupRank } from '@/services/rankService';
 import { useApp } from '@/store/AppContext';
 import styles from './wizard.module.css';
 
 export default function Step25Preview() {
-  const { draft } = useApp();
+  const { draft, dispatch } = useApp();
   const { profile } = draft;
   const rank = profile.rankOverride ?? profile.systemRank;
 
   const [tiers, setTiers] = useState<PastPlanTier[] | null>(null);
+
+  // S11: 草稿恢复后若有总分无位次，自动补查
+  useEffect(() => {
+    let alive = true;
+    if (
+      profile.totalScore !== undefined &&
+      profile.province !== undefined &&
+      profile.track !== undefined &&
+      profile.systemRank === undefined
+    ) {
+      void lookupRank(profile.province, profile.track, profile.totalScore).then((r) => {
+        if (!alive) return;
+        dispatch({ type: 'UPDATE_PROFILE', patch: { systemRank: r.rank, systemPercentile: r.percentile } });
+      });
+    }
+    return () => { alive = false; };
+  }, [profile.totalScore, profile.province, profile.track, profile.systemRank, dispatch]);
 
   useEffect(() => {
     let alive = true;

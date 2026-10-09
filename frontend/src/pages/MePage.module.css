@@ -14,7 +14,7 @@
   width: 64px;
   height: 64px;
   border-radius: 20px;
-  background: #e2ecf3;
+  background: var(--c-bg-alt);
 }
 
 .title {

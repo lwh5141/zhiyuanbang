@@ -15,7 +15,7 @@
 
 .cloud {
   position: absolute;
-  background: rgba(255, 255, 255, 0.34);
+  background: var(--c-white-a30);
   border-radius: 999px;
   filter: blur(1px);
 }
@@ -32,7 +32,7 @@
   right: 66px;
   width: 74px;
   height: 26px;
-  background: rgba(255, 255, 255, 0.26);
+  background: var(--c-white-a30);
 }
 
 .plane {
@@ -43,7 +43,7 @@
 }
 
 .countdownLabel {
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--c-white-a90);
   font-size: 13px;
   letter-spacing: 0.06em;
   font-weight: 500;
@@ -57,15 +57,15 @@
 }
 
 .days {
-  color: #fff;
+  color: var(--c-white);
   font-size: 66px;
   font-weight: 800;
   line-height: 1.15;
-  text-shadow: 0 2px 14px rgba(14, 76, 119, 0.18);
+  text-shadow: 0 2px 14px var(--c-sky-ink-a18);
 }
 
 .dayUnit {
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--c-white-a90);
   font-size: 17px;
   font-weight: 600;
 }
@@ -75,14 +75,14 @@
 }
 
 .brand {
-  color: #fff;
+  color: var(--c-white);
   font-size: 28px;
   font-weight: 800;
   letter-spacing: 0.04em;
 }
 
 .slogan {
-  color: rgba(255, 255, 255, 0.94);
+  color: var(--c-white-a90);
   font-size: 14.5px;
   margin-top: 5px;
   font-weight: 500;
@@ -91,7 +91,7 @@
 .cta {
   margin-top: 20px;
   width: 100%;
-  background: #fff;
+  background: var(--c-white);
   border-radius: 16px;
   padding: 15px 18px;
   display: flex;
@@ -155,8 +155,8 @@
 /* ② 断点续填卡 */
 .draftCard {
   width: 100%;
-  background: rgba(39, 196, 147, 0.1);
-  border: 1px solid rgba(39, 196, 147, 0.35);
+  background: var(--c-mint-a10);
+  border: 1px solid var(--c-mint-a12);
   border-radius: var(--radius-card);
   padding: 13px 15px;
   display: flex;

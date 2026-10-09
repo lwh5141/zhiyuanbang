@@ -16,7 +16,7 @@
 }
 
 .badge {
-  background: rgba(45, 156, 219, 0.14);
+  background: var(--c-sky-a14);
   color: var(--c-sky-deep);
   font-size: 12px;
   font-weight: 700;
@@ -26,23 +26,23 @@
 }
 
 .gRush {
-  background: rgba(255, 159, 67, 0.16);
-  color: #c96f14;
+  background: var(--c-rush-a10);
+  color: var(--c-rush-text);
 }
 
 .gStable {
-  background: rgba(45, 156, 219, 0.14);
+  background: var(--c-sky-a14);
   color: var(--c-sky-deep);
 }
 
 .gSafe {
-  background: rgba(39, 196, 147, 0.16);
+  background: var(--c-mint-a12);
   color: var(--c-mint-deep);
 }
 
 .gBase {
-  background: rgba(124, 156, 191, 0.18);
-  color: #56718e;
+  background: var(--c-base-a18);
+  color: var(--c-sub);
 }
 
 .titleWrap {

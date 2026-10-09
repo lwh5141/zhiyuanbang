@@ -1,6 +1,6 @@
 /* 向导顶栏（原型顶栏同参数：白底 / 底部分隔线 / 5px 渐变进度条） */
 .header {
-  background: #fff;
+  background: var(--c-white);
   padding: 10px 16px 12px;
   border-bottom: 1px solid var(--c-line);
 }

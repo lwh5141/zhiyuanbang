@@ -26,9 +26,10 @@ export default function NoMatchDiagnosis({ reasons, onBack }: NoMatchDiagnosisPr
         ))}
       </div>
       <button type="button" className={`${styles.backBtn} tap`} onClick={onBack}>
-        返回修改意向（权重/地域/黑名单）
+        返回修改意向
       </button>
       <div className={styles.note}>你的黑名单与硬性条件永远不会被系统擅自放宽，调整权始终在你手中。</div>
     </div>
   );
 }
+

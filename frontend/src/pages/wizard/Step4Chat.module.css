@@ -25,7 +25,7 @@
 .bubbleUser {
   max-width: 85%;
   background: var(--c-sky);
-  color: #fff;
+  color: var(--c-white);
   border-radius: 14px 14px 4px 14px;
   padding: 9px 12px;
   font-size: 13px;
@@ -50,7 +50,7 @@
 
 .confirmCard {
   margin-top: 10px;
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: 11px;
   padding: 10px 12px;
@@ -94,7 +94,7 @@
 }
 
 .chip {
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: 999px;
   padding: 4px 11px;
@@ -104,8 +104,8 @@
 }
 
 .chipOn {
-  background: rgba(39, 196, 147, 0.12);
-  border-color: rgba(39, 196, 147, 0.4);
+  background: var(--c-mint-a12);
+  border-color: var(--c-mint-a12);
   color: var(--c-mint-deep);
 }
 
@@ -122,14 +122,14 @@
   padding: 10px 12px;
   font-size: 13px;
   outline: none;
-  background: #fff;
+  background: var(--c-white);
   color: var(--c-ink);
 }
 
 .sendBtn {
   width: 44px;
   border-radius: 12px;
-  background: rgba(45, 156, 219, 0.12);
+  background: var(--c-sky-a12);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,3 +150,4 @@
   border-radius: 9px;
   padding: 8px 11px;
 }
+

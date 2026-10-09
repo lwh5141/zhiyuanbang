@@ -13,13 +13,13 @@
   height: 22px;
   border-radius: 999px;
   background: var(--c-sky-ink);
-  color: #fff;
+  color: var(--c-white);
   font-size: 11px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(14, 76, 119, 0.25);
+  box-shadow: 0 2px 6px var(--c-sky-ink-a25);
 }
 
 .tags {

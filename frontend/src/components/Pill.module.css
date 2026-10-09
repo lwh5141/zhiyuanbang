@@ -1,6 +1,6 @@
 /* 信息胶囊（原型方案页顶部标签同参数） */
 .pill {
-  background: #fff;
+  background: var(--c-white);
   border: 1px solid var(--c-line);
   border-radius: 999px;
   padding: 4px 11px;

@@ -30,7 +30,7 @@ interface ChatMessage {
   draftIntention?: LlmIntention;
 }
 
-let nextId = 1;
+
 
 export default function Step4Chat() {
   const navigate = useNavigate();
@@ -38,9 +38,10 @@ export default function Step4Chat() {
   const { show } = useToast();
   const { preferences } = draft;
 
+  const nextIdRef = useRef(1);
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: nextId++,
+      id: nextIdRef.current++,
       role: 'ai',
       kind: 'text',
       text: '用一句话说说你的想法吧，比如「别学医、打死不学师范，最好留在大湾区」。我可以帮你翻译成结构化条件。',
@@ -51,7 +52,7 @@ export default function Step4Chat() {
   const listRef = useRef<HTMLDivElement>(null);
 
   const push = (msg: Omit<ChatMessage, 'id'>) => {
-    setMessages((prev) => [...prev, { ...msg, id: nextId++ }]);
+    setMessages((prev) => [...prev, { ...msg, id: nextIdRef.current++ }]);
     // 等渲染后滚到底部
     setTimeout(() => listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' }), 30);
   };
@@ -242,3 +243,5 @@ function FallbackForm({ onApply }: { onApply: (data: LlmIntention) => void }) {
     </div>
   );
 }
+
+

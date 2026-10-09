@@ -51,8 +51,12 @@ export default function Step2Score() {
   const subSum = Object.values(subScores).reduce((a, b) => a + b, 0);
 
   // 单科分变化即时落库
+  // S12: subScores dispatch 加 300ms debounce，减少高频 reducer 调用
   useEffect(() => {
-    dispatch({ type: 'UPDATE_PROFILE', patch: { subScores } });
+    const t = setTimeout(() => {
+      dispatch({ type: 'UPDATE_PROFILE', patch: { subScores } });
+    }, 300);
+    return () => clearTimeout(t);
   }, [subScores, dispatch]);
 
   // 位次系统反查（省份+首选+总分齐备且合法时；V1 仅广东有示意映射表）
@@ -191,7 +195,7 @@ export default function Step2Score() {
         className={`${styles.primary} tap ${scoreValid ? '' : styles.primaryDisabled}`}
         onClick={goNext}
       >
-        {scoreValid ? '查看方案示意' : '请先填写总分'}
+        {scoreValid ? '下一步' : '请先填写总分'}
       </button>
       {/* <100 二次确认弹窗（PRD 8.1 总分校验边界） */}
       <Modal
@@ -256,3 +260,4 @@ export default function Step2Score() {
     </div>
   );
 }
+
