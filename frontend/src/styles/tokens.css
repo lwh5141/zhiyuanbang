@@ -1,0 +1,48 @@
+/* ============================================================
+   志愿帮 · 青空薄荷设计 Token
+   逐项平移自原型 C 色板（志愿帮-首页原型.html），1:1 还原基准。
+   全局改肤只需改本文件，禁止在组件里写死色值。
+   ============================================================ */
+:root {
+  /* 主色系 */
+  --c-sky: #2d9cdb;        /* 主色 / CTA / 「稳」 */
+  --c-sky-deep: #1b6fa8;   /* 深强调 */
+  --c-sky-ink: #0e4c77;    /* 标题强调 */
+  --c-sky-fill: rgba(45, 156, 219, 0.16); /* 选中态图标淡填充（TabBar / 内联 SVG active） */
+  --c-icon-muted: #9fb6c9; /* 未激活图标与 Tab 标签 */
+  --c-mint: #27c493;       /* 草稿恢复 / 「保」 */
+  --c-mint-deep: #159b70;
+
+  /* 中性色 */
+  --c-bg: #f4fafd;         /* 页面底色 */
+  --c-card: #ffffff;
+  --c-ink: #16324a;        /* 正文 */
+  --c-sub: #5b7a94;        /* 次要文字 */
+  --c-line: #dcebf5;       /* 分隔线 */
+  --c-faint: #93a9bc;      /* 弱提示 */
+  --c-disabled: #b9cfdf;   /* 置灰按钮 */
+  --c-danger: #d9534f;     /* 校验标红 */
+
+  /* 四梯度色 */
+  --c-rush: #ff9f43;       /* 冲 */
+  --c-stable: #2d9cdb;     /* 稳 */
+  --c-safe: #27c493;       /* 保 */
+  --c-base: #7c9cbf;       /* 垫 */
+
+  /* 字体：系统栈（禁止在线字体） */
+  --font-sys: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Segoe UI', sans-serif;
+
+  /* 布局规格（原型布局说明）：页边距 20–24 / 卡片间距 14–16 / 圆角卡片 14 按钮 15 */
+  --radius-card: 14px;
+  --radius-btn: 15px;
+  --pad-page: 20px;
+
+  /* 阴影与渐变（原型同值） */
+  --shadow-card: 0 2px 10px rgba(22, 50, 74, 0.05);
+  --shadow-hero-cta: 0 8px 24px rgba(14, 76, 119, 0.18);
+  --shadow-btn: 0 6px 18px rgba(45, 156, 219, 0.32);
+  --shadow-toast: 0 6px 18px rgba(0, 0, 0, 0.2);
+  --grad-sky: linear-gradient(178deg, #2d9cdb 0%, #56b7e8 42%, #a8dff5 76%, #eaf7fd 100%);
+  --grad-progress: linear-gradient(90deg, var(--c-sky), var(--c-mint));
+}

@@ -1,0 +1,75 @@
+/* 通用可选卡片（原型 S1 省份/首选卡片 + 再选胶囊同参数） */
+.card {
+  position: relative;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1.5px solid var(--c-line);
+  border-radius: 13px;
+  padding: 13px 14px;
+  display: block;
+}
+
+.cardOn {
+  background: rgba(45, 156, 219, 0.1);
+  border-color: var(--c-sky);
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.titleOn {
+  color: var(--c-sky-deep);
+}
+
+.subtitle {
+  font-size: 10.5px;
+  color: var(--c-mint-deep);
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.subtitleOn {
+  color: var(--c-sky-deep);
+}
+
+.check {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  display: flex;
+}
+
+.disabled {
+  opacity: 1;
+  border-color: var(--c-line);
+  cursor: not-allowed;
+}
+
+.disabled .title {
+  color: var(--c-faint);
+}
+
+.disabled .subtitle {
+  color: #a9bdcb;
+}
+
+/* 胶囊（再选科目，原型 pill 口径） */
+.pill {
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--c-faint);
+}
+
+.pillOn {
+  background: rgba(39, 196, 147, 0.12);
+  border-color: rgba(39, 196, 147, 0.4);
+  color: var(--c-mint-deep);
+}

@@ -1,0 +1,85 @@
+/* 通用弹窗 */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 40, 62, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  padding: 24px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 18px 14px;
+  width: 100%;
+  max-width: 340px;
+  box-shadow: 0 12px 40px rgba(14, 40, 62, 0.25);
+}
+
+.title {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+
+.body {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--c-sub);
+  line-height: 1.6;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 12.5px;
+  color: var(--c-ink);
+  font-weight: 600;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.checkbox {
+  margin-top: 2px;
+  accent-color: var(--c-sky);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.btn {
+  flex: 1;
+  border-radius: var(--radius-btn);
+  padding: 11px 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cancel {
+  background: var(--c-bg);
+  color: var(--c-sub);
+  border: 1px solid var(--c-line);
+}
+
+.confirm {
+  background: var(--c-sky);
+  color: #fff;
+  box-shadow: var(--shadow-btn);
+}
+
+.confirmDisabled {
+  background: var(--c-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}

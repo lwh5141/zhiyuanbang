@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高考志愿填报 RAG 系统 — 三方案图解</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    line-height: 1.6;
+    padding: 24px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #0f172a;
+  }
+  .subtitle { text-align: center; color: #64748b; margin-bottom: 40px; font-size: 14px; }
+
+  .plan-section {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 36px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    border-left: 5px solid;
+  }
+  .plan-section.p1 { border-left-color: #3b82f6; }
+  .plan-section.p2 { border-left-color: #f59e0b; }
+  .plan-section.p3 { border-left-color: #8b5cf6; }
+
+  .plan-badge {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .p1 .plan-badge { background: #3b82f6; }
+  .p2 .plan-badge { background: #f59e0b; }
+  .p3 .plan-badge { background: #8b5cf6; }
+
+  .plan-section h2 { font-size: 22px; margin-bottom: 8px; }
+  .plan-section .desc { color: #64748b; font-size: 14px; margin-bottom: 28px; }
+
+  .diagram-group {
+    margin-bottom: 32px;
+  }
+  .diagram-group h3 {
+    font-size: 16px;
+    color: #334155;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .diagram-group h3 .icon { margin-right: 6px; }
+  .mermaid {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  .compare-table th, .compare-table td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 14px;
+    text-align: center;
+  }
+  .compare-table th { background: #f1f5f9; font-weight: 600; color: #334155; }
+  .compare-table td:first-child { text-align: left; font-weight: 600; }
+  .tag-light { background: #dbeafe; color: #1d4ed8; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .tag-mid { background: #fef3c7; color: #b45309; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .tag-heavy { background: #ede9fe; color: #6d28d9; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .plan-section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>高考志愿填报APP — RAG系统三方案图解</h1>
+<p class="subtitle">方案一：文件级RAG（轻量） · 方案二：混合检索RAG（中量） · 方案三：Agentic RAG + 知识图谱（重量）</p>
+
+<!-- ======================== 方案一 ======================== -->
+<div class="plan-section p1">
+  <span class="plan-badge">方案一 · 轻量</span>
+  <h2>文件级 RAG</h2>
+  <p class="desc">219 个 MD 文件 → 递归分块 → BGE-M3 向量化 → Chroma 向量库 → 注入 DeepSeek Prompt</p>
+
+  <!-- 整体架构 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🏗️</span>整体架构总览</h3>
+    <div class="mermaid">
+graph TB
+    subgraph 数据层["📁 数据层"]
+        MD["219个 Markdown 文件<br/>01_各省分数线 / 02_位次表<br/>03_招生计划 / 04_专业详情"]
+    end
+
+    subgraph 摄入层["⚙️ 摄入管道"]
+        PARSE["Markdown 解析<br/>表格→JSON + 标题层级保留"]
+        CHUNK["递归分块<br/>512 tokens / 重叠10%"]
+        EMBED["BGE-M3 向量化<br/>1024维 Dense 向量"]
+    end
+
+    subgraph 存储层["💾 存储层"]
+        CHROMA[("Chroma<br/>向量库<br/>持久化到本地磁盘")]
+    end
+
+    subgraph 检索层["🔍 检索层"]
+        QBUILD["查询文本构建<br/>省份+科类+分数+专业偏好"]
+        SEARCH["余弦相似度检索<br/>top-20 chunks"]
+        ARRANGE["U型注意力排列<br/>高分3条放头尾"]
+    end
+
+    subgraph 生成层["🧠 生成层"]
+        PROMPT["Prompt 拼接<br/>{retrieved_context}"]
+        DS["DeepSeek-V4-Flash<br/>生成推荐+理由"]
+    end
+
+    MD --> PARSE --> CHUNK --> EMBED --> CHROMA
+    QBUILD --> SEARCH --> ARRANGE --> PROMPT --> DS
+    CHROMA -.-> SEARCH
+
+    style MD fill:#dbeafe,stroke:#3b82f6
+    style CHROMA fill:#dbeafe,stroke:#3b82f6
+    style DS fill:#dbeafe,stroke:#3b82f6
+    </div>
+  </div>
+
+  <!-- 数据摄入流程 -->
+  <div class="diagram-group">
+    <h3><span class="icon">📥</span>数据摄入流程（ingestDocs 六步）</h3>
+    <div class="mermaid">
+flowchart LR
+    S1["① 遍历文件<br/>递归读取 .md<br/>标注 category"] -->
+    S2["② 解析 Markdown<br/>表格→JSON<br/>保留标题层级<br/>保留段落原样"] -->
+    S3["③ 标记元数据<br/>自动提取<br/>province/year<br/>subject_type"] -->
+    S4["④ 递归分块<br/>512 tokens/chunk<br/>重叠 51 tokens"] -->
+    S5["⑤ 向量化<br/>BGE-M3<br/>1024维向量"] -->
+    S6["⑥ 存入 Chroma<br/>gaokao_knowledge<br/>持久化本地磁盘"]
+
+    style S1 fill:#eff6ff,stroke:#3b82f6
+    style S2 fill:#eff6ff,stroke:#3b82f6
+    style S3 fill:#eff6ff,stroke:#3b82f6
+    style S4 fill:#eff6ff,stroke:#3b82f6
+    style S5 fill:#eff6ff,stroke:#3b82f6
+    style S6 fill:#dbeafe,stroke:#2563eb,stroke-width:2px
+    </div>
+  </div>
+
+  <!-- 检索流程 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🔍</span>检索流程（用户请求 → LLM 生成）</h3>
+    <div class="mermaid">
+flowchart TD
+    USER["👤 用户输入<br/>广东·物理类·600分<br/>计算机专业偏好"] -->
+    Q["构建查询文本<br/>'广东 物理类 600分 计算机<br/>2026年 录取位次 招生计划 冲稳保'"]
+
+    Q --> VEC["BGE-M3 Embedding<br/>文本 → 1024维向量"]
+
+    VEC --> CHROMA_QRY[("Chroma 检索<br/>余弦相似度<br/>n_results=20")]
+
+    CHROMA_QRY --> TOP20["20 个 chunk<br/>按相似度排序"]
+
+    TOP20 --> U_SHAPE["U型注意力排列<br/>🔝 最高3条 → Prompt头部<br/>🔛 中间14条 → Prompt中间<br/>🔚 次高3条 → Prompt尾部"]
+
+    U_SHAPE --> PROMPT_ASM["拼接 Prompt<br/>{retrieved_context}<br/>+ 用户问题 + System Prompt"]
+
+    PROMPT_ASM --> LLM["DeepSeek-V4-Flash<br/>生成推荐+理由"]
+
+    LLM --> OUT["✅ 输出<br/>冲/稳/保/垫 推荐清单<br/>含数据来源引用"]
+
+    style USER fill:#f0fdf4,stroke:#22c55e
+    style OUT fill:#f0fdf4,stroke:#22c55e
+    style CHROMA_QRY fill:#dbeafe,stroke:#3b82f6
+    style LLM fill:#dbeafe,stroke:#3b82f6
+    </div>
+  </div>
+
+  <!-- 与现有系统集成 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🔗</span>与现有推荐流程集成</h3>
+    <div class="mermaid">
+flowchart LR
+    DB[("PostgreSQL<br/>录取数据库")] --> QUERY["① 数据库查询<br/>按分数/位次筛选"]
+    QUERY --> BUCKET["② 四层分档<br/>冲 / 稳 / 保 / 垫"]
+    BUCKET --> RAG["③ RAG 检索<br/>🆕 新增环节<br/>向量库检索 20 条知识片段"]
+    RAG --> LLM2["④ 大模型排序<br/>分档结果 + RAG上下文<br/>→ DeepSeek 排序+理由"]
+    LLM2 --> RESULT["⑤ 推荐结果"]
+
+    style RAG fill:#dbeafe,stroke:#3b82f6,stroke-width:2px
+    style BUCKET fill:#f1f5f9,stroke:#94a3b8
+    style LLM2 fill:#f1f5f9,stroke:#94a3b8
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 方案二 ======================== -->
+<div class="plan-section p2">
+  <span class="plan-badge">方案二 · 中量</span>
+  <h2>混合检索 RAG</h2>
+  <p class="desc">Dense（语义召回）+ Sparse（关键词精确匹配）→ RRF 融合 → Cross-Encoder Reranker 精排</p>
+
+  <!-- 整体架构 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🏗️</span>整体架构总览</h3>
+    <div class="mermaid">
+graph TB
+    subgraph 数据摄入["📥 数据摄入 (方案一六步 + 三步增量)"]
+        MD2["219个 MD 文件"] --> CHUNK2["表格独立分块<br/>+ 叙述递归分块"]
+        CHUNK2 --> CONTEXT["Contextual Retrieval<br/>LLM生成上下文前缀"]
+        CHUNK2 --> STRUCT["结构化表格提取<br/>LLM → JSON 归一化"]
+    end
+
+    subgraph 向量化["⚙️ BGE-M3 双向量"]
+        DENSE["Dense 向量<br/>1024维 语义匹配"]
+        SPARSE["Sparse 向量<br/>词权重 BM25-like"]
+    end
+
+    subgraph 存储["💾 Qdrant (Docker)"]
+        QDRANT[("Qdrant<br/>Payload 前置过滤<br/>year/province/subject_type")]
+    end
+
+    subgraph 检索链路["🔍 混合检索链路"]
+        D_RET["Dense 检索<br/>top-60 语义召回"]
+        S_RET["Sparse 检索<br/>top-60 关键词精确匹配"]
+        RRF["RRF 融合<br/>1/(60+rank)"]
+        RERANK["BGE-Reranker-v2-m3<br/>Cross-Encoder 精排<br/>top-40 → top-15"]
+    end
+
+    subgraph 生成["🧠 生成"]
+        PROMPT2["增强 Prompt<br/>+ 时效性规则<br/>+ 政策规则"]
+        DS2["DeepSeek-V4-Flash"]
+    end
+
+    MD2 --> DENSE & SPARSE --> QDRANT
+    CONTEXT --> DENSE
+    STRUCT --> QDRANT
+    QDRANT --> D_RET & S_RET
+    D_RET --> RRF
+    S_RET --> RRF
+    RRF --> RERANK --> PROMPT2 --> DS2
+
+    style QDRANT fill:#fef3c7,stroke:#f59e0b
+    style RRF fill:#fef3c7,stroke:#f59e0b
+    style RERANK fill:#fef3c7,stroke:#f59e0b
+    style DS2 fill:#fef3c7,stroke:#f59e0b
+    </div>
+  </div>
+
+  <!-- 数据摄入九步 -->
+  <div class="diagram-group">
+    <h3><span class="icon">📥</span>数据摄入流程（方案一六步 + 新增三步）</h3>
+    <div class="mermaid">
+flowchart TD
+    subgraph 方案一保留["方案一六步（保留）"]
+        S1_2["① 遍历文件<br/>标注 category"] -->
+        S2_2["② 解析 Markdown<br/>表格→JSON"] -->
+        S3_2["③ 标记元数据<br/>province/year/subject_type"] -->
+        S4_2["④ 表格独立分块<br/>+ 叙述递归分块"] -->
+        S5_2["⑤ BGE-M3 双向量<br/>Dense + Sparse"] -->
+        S6_2["⑥ 预备写入"]
+    end
+
+    subgraph 方案二新增["方案二新增三步"]
+        S7["⑦ 结构化表格提取<br/>DeepSeek Batch API<br/>非统一格式归一化"]
+        S8["⑧ Contextual Retrieval<br/>每chunk生成50-100token<br/>上下文前缀"]
+        S9["⑨ 存入 Qdrant<br/>Dense向量 + Sparse向量<br/>+ Payload 结构化JSON<br/>+ 上下文前缀 + 原文"]
+    end
+
+    S6_2 --> S7 --> S8 --> S9
+
+    style S7 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style S8 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style S9 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    </div>
+  </div>
+
+  <!-- 检索流程 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🔍</span>混合检索流程（核心差异）</h3>
+    <div class="mermaid">
+flowchart TD
+    USER2["👤 用户输入<br/>广东·物理类·600分·计算机"] -->
+    PARSE2["解析结构化条件<br/>province=广东<br/>subject_type=物理类<br/>score=600"]
+
+    PARSE2 --> FILTER["Payload 前置过滤<br/>must(province='广东' OR null)<br/>must(subject_type='物理类' OR null)"]
+
+    FILTER --> D_R["🔵 Dense 检索<br/>BGE-M3 Dense向量<br/>top-60<br/>语义召回「计算机≈软件工程≈AI」"]
+
+    FILTER --> S_R["🟡 Sparse 检索<br/>BGE-M3 Sparse向量<br/>top-60<br/>精确命中「四川大学」「625分」「8500位次」"]
+
+    D_R --> RRF2["🔀 RRF 融合<br/>score = Σ 1/(60+rank)<br/>Dense排名 + Sparse排名 → top-40"]
+
+    S_R --> RRF2
+
+    RRF2 --> RERANK2["🎯 BGE-Reranker-v2-m3<br/>Cross-Encoder 深度匹配<br/>对每个(query,chunk)联合编码打分<br/>top-40 → top-15"]
+
+    RERANK2 --> U2["U型注意力排列<br/>高分放头尾"]
+
+    U2 --> PROMPT_ENH["增强 Prompt<br/>+ 时效性规则<br/>+ 政策规则<br/>+ 元数据标注"]
+
+    PROMPT_ENH --> LLM2_2["DeepSeek-V4-Flash"]
+
+    LLM2_2 --> OUT2["✅ 精准推荐清单"]
+
+    style FILTER fill:#fef3c7,stroke:#f59e0b
+    style D_R fill:#dbeafe,stroke:#3b82f6
+    style S_R fill:#fef3c7,stroke:#f59e0b
+    style RRF2 fill:#fef3c7,stroke:#f59e0b,stroke-width:2px
+    style RERANK2 fill:#f59e0b,stroke:#b45309,stroke-width:2px,color:#fff
+    </div>
+  </div>
+
+  <!-- 方案一 vs 方案二对比 -->
+  <div class="diagram-group">
+    <h3><span class="icon">⚡</span>方案一 vs 方案二 检索链路对比</h3>
+    <div class="mermaid">
+flowchart LR
+    subgraph 方案一链路["方案一：单通道 Dense"]
+        direction TB
+        Q1["查询"] --> D1["Dense 检索<br/>top-20"] --> L1["DeepSeek"]
+    end
+
+    subgraph 方案二链路["方案二：双通道 + Reranker"]
+        direction TB
+        Q2["查询"] --> FILT["Payload<br/>前置过滤"]
+        FILT --> D2["Dense top-60"]
+        FILT --> S2["Sparse top-60"]
+        D2 --> MR["RRF<br/>融合"]
+        S2 --> MR
+        MR --> RK["Reranker<br/>top-15"]
+        RK --> L2["DeepSeek"]
+    end
+
+    方案一链路 -.->|"Recall@5: ~0.65"| 方案一链路
+    方案二链路 -.->|"Recall@5: 0.84"| 方案二链路
+
+    style 方案一链路 fill:#eff6ff,stroke:#3b82f6,stroke-dasharray:5
+    style 方案二链路 fill:#fffbeb,stroke:#f59e0b,stroke-width:2px
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 方案三 ======================== -->
+<div class="plan-section p3">
+  <span class="plan-badge">方案三 · 重量</span>
+  <h2>Agentic RAG + 知识图谱</h2>
+  <p class="desc">Neo4j 知识图谱 + Qdrant 混合检索 + Agent 推理层（Router → 并行检索 → Fusion → Self-RAG）</p>
+
+  <!-- 整体架构 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🏗️</span>整体架构总览</h3>
+    <div class="mermaid">
+graph TB
+    subgraph 数据基础设施["🏛️ 数据基础设施"]
+        NEO[("Neo4j 知识图谱<br/>大学-专业-省份-选科<br/>四类节点 五种关系")]
+        QD[("Qdrant 向量库<br/>混合检索 + Reranker<br/>复用方案二")]
+    end
+
+    subgraph Agent推理层["🧠 Agent 推理层"]
+        ROUTER["① Router 查询规划器<br/>DeepSeek-V4-Flash 思考模式<br/>拆解为 1~4 个子查询<br/>标注类型: graph/vector"]
+        PARALLEL["② 并行检索"]
+        GRAPH_R["Cypher 查询<br/>知识图谱关系推理"]
+        VECTOR_R["混合检索<br/>Dense+Sparse+Reranker"]
+        FUSION["③ Fusion 交叉验证<br/>confirmed / graph_only<br/>/ vector_only<br/>RRF 融合排序"]
+        SELFRAG["④ Self-RAG<br/>第一轮: Flash 生成推荐<br/>第二轮: Pro 反思验证"]
+    end
+
+    subgraph 评估["📊 离线评估"]
+        RAGAS["RAGAS<br/>Recall@k / nDCG@k<br/>Groundedness / Completeness"]
+    end
+
+    NEO --> GRAPH_R
+    QD --> VECTOR_R
+    ROUTER --> GRAPH_R & VECTOR_R --> FUSION --> SELFRAG
+    SELFRAG -.-> RAGAS
+
+    style NEO fill:#ede9fe,stroke:#8b5cf6
+    style QD fill:#ede9fe,stroke:#8b5cf6
+    style ROUTER fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    style FUSION fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    style SELFRAG fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff
+    </div>
+  </div>
+
+  <!-- 知识图谱 Schema -->
+  <div class="diagram-group">
+    <h3><span class="icon">🕸️</span>知识图谱 Schema（4 种节点 · 5 种关系）</h3>
+    <div class="mermaid">
+graph TB
+    U["🏫 University 大学<br/>name / code / level<br/>is985 / is211<br/>city"]
+    M["📚 Major 专业<br/>name / code<br/>category / subcategory<br/>degree / duration"]
+    P["📍 Province 省份<br/>name / code<br/>exam_mode<br/>total_score"]
+    S["📋 SubjectRequirement<br/>选科要求<br/>subjects[]<br/>coverage_pct"]
+    AR["📊 AdmissionRecord<br/>录取记录<br/>year / batch / subject_type<br/>min_score / avg_score / max_score<br/>min_rank / avg_rank / max_rank<br/>plan_count"]
+
+    U -->|"LOCATED_IN<br/>大学位于省份"| P
+    U -->|"OFFERS<br/>year / plan_count / tuition"| M
+    M -->|"REQUIRES<br/>专业要求选科"| S
+    AR -->|"FOR_UNIVERSITY"| U
+    AR -->|"FOR_MAJOR"| M
+    AR -->|"IN_PROVINCE"| P
+
+    style U fill:#c7d2fe,stroke:#6366f1
+    style M fill:#c7d2fe,stroke:#6366f1
+    style P fill:#c7d2fe,stroke:#6366f1
+    style S fill:#c7d2fe,stroke:#6366f1
+    style AR fill:#a5b4fc,stroke:#4f46e5,stroke-width:2px
+    </div>
+  </div>
+
+  <!-- 知识图谱构建流程 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🔧</span>知识图谱构建流程</h3>
+    <div class="mermaid">
+flowchart LR
+    KG1["① 实体识别<br/>LLM提取JSON<br/>去重建实体字典<br/>MERGE 创建节点"] -->
+    KG2["② 创建关系<br/>遍历录取记录→AR节点<br/>连接 University/Major/Province<br/>选科→SubjectRequirement"] -->
+    KG3["③ 数据补全<br/>分散信息汇聚<br/>同一大学节点<br/>补充招生总人数等"] -->
+    KG4["④ 建索引<br/>university_name/level<br/>major_name/category<br/>admission_year_rank"]
+
+    style KG1 fill:#ede9fe,stroke:#8b5cf6
+    style KG2 fill:#ede9fe,stroke:#8b5cf6
+    style KG3 fill:#ede9fe,stroke:#8b5cf6
+    style KG4 fill:#c4b5fd,stroke:#7c3aed
+    </div>
+  </div>
+
+  <!-- Agent 推理管线 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🧠</span>Agent 推理管线（四步流水线）</h3>
+    <div class="mermaid">
+flowchart TD
+    UQ["👤 用户复杂问题<br/>'广东物理类600分位次25000<br/>计算机或电子 211以上 学费别太贵'"]
+
+    UQ --> R["① Router 查询规划<br/>DeepSeek-V4-Flash + 思考模式<br/>拆解为 graph/vector 子查询<br/>每子查询生成 cypher_hint"]
+
+    R --> SQ1["子查询1: graph<br/>位次25000 冲稳保区间<br/>Cypher: ORDER BY abs<br/>(min_rank-25000) LIMIT 50"]
+    R --> SQ2["子查询2: graph<br/>211及以上 计算机/电子<br/>Cypher: MATCH u-M<br/>WHERE is211 AND subcategory"]
+    R --> SQ3["子查询3: vector<br/>计算机 电子 学费<br/>选科要求 2026 广东<br/>Qdrant 混合检索"]
+
+    SQ1 & SQ2 --> G_RET["📊 Graph 检索结果<br/>精确结构化匹配"]
+    SQ3 --> V_RET["📝 Vector 检索结果<br/>语义相关补充"]
+
+    G_RET --> F3["③ Fusion 交叉验证"]
+    V_RET --> F3
+
+    F3 --> F3_DETAIL["confirmed: 两路都命中 置信度最高<br/>graph_only: 仅图谱命中 精确匹配<br/>vector_only: 仅向量命中 语义补充<br/>→ RRF融合 → top-20候选"]
+
+    F3_DETAIL --> SR["④ Self-RAG 生成+反思"]
+
+    SR --> SR1["第一轮: DeepSeek-Flash<br/>生成推荐清单<br/>冲稳保分类 + 录取概率<br/>+ 数据来源标注"]
+    SR1 --> SR2["第二轮: DeepSeek-Pro<br/>反思验证<br/>✓ 每条有数据支撑?<br/>✓ 冲稳保 30/50/20 黄金比?<br/>✓ 遗漏明显选项?<br/>✓ 年份数据冲突?"]
+
+    SR2 --> FINAL["✅ 最终推荐清单<br/>标注数据来源<br/>置信度分级"]
+
+    style R fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    style F3 fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    style SR fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff
+    style FINAL fill:#f0fdf4,stroke:#22c55e
+    </div>
+  </div>
+
+  <!-- 全系统集成架构 -->
+  <div class="diagram-group">
+    <h3><span class="icon">🔗</span>方案三与现有系统集成架构</h3>
+    <div class="mermaid">
+flowchart TB
+    subgraph 现有系统["现有推荐系统（保留不变）"]
+        DB2[("PostgreSQL<br/>录取数据库")] --> QY["数据库查询<br/>按分数/位次"]
+        QY --> BK["四层分档<br/>冲/稳/保/垫"]
+    end
+
+    subgraph 方案三新增["方案三新增"]
+        AGENT["Agent 编排层 🆕"]
+        NEO2[("Neo4j<br/>知识图谱<br/>Graph检索 🆕")]
+        QD2[("Qdrant<br/>混合检索+Reranker<br/>Vector检索 🆕")]
+        FUS["Fusion<br/>交叉验证 🆕"]
+        SELF["Self-RAG<br/>Flash生成+Pro反思 🆕"]
+    end
+
+    USER3["👤 用户输入"] --> AGENT
+    AGENT --> NEO2 & QD2
+    NEO2 --> FUS
+    QD2 --> FUS
+    FUS --> SELF
+
+    BK --> SELF
+    SELF --> OUT3["✅ 最终推荐"]
+
+    style AGENT fill:#ede9fe,stroke:#8b5cf6,stroke-width:2px
+    style NEO2 fill:#ede9fe,stroke:#8b5cf6
+    style QD2 fill:#ede9fe,stroke:#8b5cf6
+    style FUS fill:#ede9fe,stroke:#8b5cf6
+    style SELF fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    style BK fill:#f1f5f9,stroke:#94a3b8
+    </div>
+  </div>
+</div>
+
+<!-- ======================== 三方案对比 ======================== -->
+<div class="plan-section" style="border-left-color: #10b981;">
+  <span class="plan-badge" style="background:#10b981;">总结对比</span>
+  <h2>三方案全景对比</h2>
+
+  <div class="diagram-group">
+    <h3><span class="icon">📊</span>复杂度 & 效果演进</h3>
+    <div class="mermaid">
+graph LR
+    subgraph P1["方案一 轻量"]
+        A1["Chroma<br/>Dense only<br/>top-20"]
+        A2["零运维"]
+        A3["Recall@5<br/>~0.65"]
+    end
+
+    subgraph P2["方案二 中量"]
+        B1["Qdrant<br/>Dense+Sparse<br/>+Reranker top-15"]
+        B2["1个Docker"]
+        B3["Recall@5<br/>0.84"]
+    end
+
+    subgraph P3["方案三 重量"]
+        C1["Qdrant+Neo4j<br/>+Agent+Self-RAG"]
+        C2["3个服务"]
+        C3["多跳推理<br/>跨表查询"]
+    end
+
+    P1 --> P2 --> P3
+
+    style P1 fill:#eff6ff,stroke:#3b82f6
+    style P2 fill:#fffbeb,stroke:#f59e0b
+    style P3 fill:#f5f3ff,stroke:#8b5cf6
+    </div>
+  </div>
+
+  <table class="compare-table">
+    <tr>
+      <th>维度</th><th>方案一 <span class="tag-light">轻量</span></th><th>方案二 <span class="tag-mid">中量</span></th><th>方案三 <span class="tag-heavy">重量</span></th>
+    </tr>
+    <tr>
+      <td>向量库</td><td>Chroma（嵌入式）</td><td>Qdrant（Docker）</td><td>Qdrant + Neo4j（2×Docker）</td>
+    </tr>
+    <tr>
+      <td>检索方式</td><td>Dense only</td><td>Dense + Sparse + Reranker</td><td>Graph + Vector + Agent</td>
+    </tr>
+    <tr>
+      <td>候选数</td><td>top-20</td><td>60→RRF→40→Reranker→15</td><td>Agent 拆解 → 并行 → Fusion → top-20</td>
+    </tr>
+    <tr>
+      <td>运维负担</td><td>零</td><td>1 个 Docker 容器</td><td>3 个服务 + RAGAS 评估</td>
+    </tr>
+    <tr>
+      <td>查询延迟</td><td>~0.5s</td><td>~1-2s</td><td>~3-6s</td>
+    </tr>
+    <tr>
+      <td>精确数值匹配</td><td>弱</td><td>强（BM25+Reranker）</td><td>强</td>
+    </tr>
+    <tr>
+      <td>多跳推理</td><td>不支持</td><td>部分支持</td><td>完整支持</td>
+    </tr>
+    <tr>
+      <td>最佳场景</td><td>语义类问题<br/>政策说明类</td><td>精确数据查询<br/>多条件筛选</td><td>复杂复合问题<br/>跨表推理</td>
+    </tr>
+  </table>
+</div>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    themeVariables: {
+      fontFamily: '-apple-system, "Microsoft YaHei", "PingFang SC", sans-serif',
+      fontSize: '14px',
+    },
+    flowchart: {
+      useMaxWidth: true,
+      htmlLabels: true,
+      curve: 'basis',
+    },
+  });
+</script>
+</body>
+</html>

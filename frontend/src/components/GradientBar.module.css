@@ -1,0 +1,62 @@
+/* 四梯度配比条（原型首页④同参数：12px 高 / 圆角 6 / 段间距 4） */
+.bar {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.seg {
+  height: 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.seg span {
+  font-size: 10.5px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.segRush {
+  background: var(--c-rush);
+}
+
+.segStable {
+  background: var(--c-stable);
+}
+
+.segSafe {
+  background: var(--c-safe);
+}
+
+.segBase {
+  background: var(--c-base);
+}
+
+.legend {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+}
+
+.legendText {
+  font-size: 11px;
+  color: var(--c-sub);
+}

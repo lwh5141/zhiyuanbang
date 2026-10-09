@@ -1,0 +1,11 @@
+{
+  "comment": "演示数据：特殊身份政策示意（省份适用性/加分说明，以省考试院当年文件为准）",
+  "policies": [
+    { "identityId": "national", "appliesTo": ["GD"], "summary": "面向原脱贫攻坚地区定向招生，需户籍+学籍连续满 3 年（示意）" },
+    { "identityId": "local", "appliesTo": ["GD"], "summary": "面向广东省实施区域农村考生（示意）" },
+    { "identityId": "university", "appliesTo": ["GD"], "summary": "面向边远、脱贫、民族等地区县以下高中优秀毕业生（示意）" },
+    { "identityId": "qiangji", "appliesTo": ["GD"], "summary": "聚焦基础学科，校测含笔试/面试/体育测试（示意）" },
+    { "identityId": "ethnic", "appliesTo": ["GD"], "summary": "少数民族聚居区考生加 5–20 分（广东现行口径示意，以当年文件为准）" },
+    { "identityId": "artSport", "appliesTo": ["GD"], "summary": "艺体类综合分公式分省不同，V1.1 开放" }
+  ]
+}

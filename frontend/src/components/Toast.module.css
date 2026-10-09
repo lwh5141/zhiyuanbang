@@ -1,0 +1,19 @@
+/* 底部浮层提示（原型 toast 同参数） */
+.toast {
+  position: fixed;
+  bottom: 104px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(22, 50, 74, 0.88);
+  color: #fff;
+  font-size: 12.5px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 88vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 70;
+  box-shadow: var(--shadow-toast);
+  pointer-events: none;
+}

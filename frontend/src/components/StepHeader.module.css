@@ -1,0 +1,54 @@
+/* 向导顶栏（原型顶栏同参数：白底 / 底部分隔线 / 5px 渐变进度条） */
+.header {
+  background: #fff;
+  padding: 10px 16px 12px;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.spacer {
+  width: 28px;
+}
+
+.track {
+  margin-top: 10px;
+  height: 5px;
+  background: var(--c-line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--grad-progress);
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+
+.hint {
+  margin-top: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  padding: 2px 0;
+}

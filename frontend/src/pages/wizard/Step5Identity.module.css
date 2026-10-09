@@ -1,0 +1,57 @@
+/* S5 特殊身份 + 完整度 */
+.identityList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.policyHint {
+  margin-top: 6px;
+  background: rgba(45, 156, 219, 0.08);
+  border-radius: 9px;
+  padding: 7px 11px;
+  font-size: 11.5px;
+  color: var(--c-sky-deep);
+  line-height: 1.55;
+}
+
+.completenessCard {
+  margin-top: 18px;
+  background: rgba(39, 196, 147, 0.1);
+  border: 1px solid rgba(39, 196, 147, 0.32);
+  border-radius: var(--radius-card);
+  padding: 13px 15px;
+}
+
+.completenessLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-mint-deep);
+}
+
+.completenessValue {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.completenessBar {
+  margin-top: 8px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.completenessFill {
+  height: 100%;
+  background: var(--grad-progress);
+  border-radius: 3px;
+  transition: width 0.35s ease;
+}
+
+.completenessNote {
+  margin-top: 7px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+}

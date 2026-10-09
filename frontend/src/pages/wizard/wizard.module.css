@@ -1,0 +1,334 @@
+/* 向导共享样式：步骤页通用卡片/按钮/校验文案（步骤组件共用同一 module） */
+.body {
+  padding: 16px 20px 40px;
+}
+
+.sectionTitle {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+
+.sectionTitleGap {
+  margin-top: 20px;
+}
+
+.sectionSub {
+  font-size: 12px;
+  color: var(--c-sub);
+  margin-top: 4px;
+}
+
+/* 回显确认条（S1 顶部，默认来自草稿） */
+.echo {
+  background: rgba(45, 156, 219, 0.08);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12.5px;
+  color: var(--c-sky-deep);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+/* 主按钮（含置灰态） */
+.primary {
+  margin-top: 24px;
+  width: 100%;
+  background: var(--c-sky);
+  border-radius: var(--radius-btn);
+  padding: 15px 0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: var(--shadow-btn);
+}
+
+.primaryDisabled {
+  background: var(--c-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* 次级链接按钮 */
+.linkBtn {
+  margin-top: 10px;
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: var(--c-sub);
+  padding: 6px;
+}
+
+/* 校验标红 */
+.warn {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--c-danger);
+  font-weight: 600;
+}
+
+/* 蓝色提示卡（位次反查等） */
+.infoCard {
+  background: rgba(45, 156, 219, 0.09);
+  border: 1px solid rgba(45, 156, 219, 0.3);
+  border-radius: var(--radius-card);
+  padding: 14px 15px;
+  margin-top: 16px;
+}
+
+.infoCardLabel {
+  font-size: 12px;
+  color: var(--c-sky-deep);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.infoCardMain {
+  font-size: 21px;
+  font-weight: 800;
+  color: var(--c-ink);
+  margin-top: 6px;
+}
+
+.infoCardSub {
+  font-size: 13.5px;
+  color: var(--c-sky-ink);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* 蓝色提示卡内引用块（位次证据原文，REQ-002） */
+.sourceQuote {
+  margin-top: 9px;
+  background: #fff;
+  border-radius: 9px;
+  padding: 8px 11px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  line-height: 1.55;
+}
+
+/* 输入卡（总分/单科/覆盖位次） */
+.inputCard {
+  background: #fff;
+  border: 1.5px solid var(--c-line);
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  margin-top: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.scoreInput {
+  border: none;
+  outline: none;
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--c-ink);
+  width: 110px;
+  background: transparent;
+}
+
+.inputHint {
+  font-size: 12.5px;
+  color: var(--c-sub);
+}
+
+.subPanel {
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+
+.subRow {
+  display: flex;
+  gap: 8px;
+}
+
+.subField {
+  flex: 1;
+}
+
+.subLabel {
+  font-size: 11.5px;
+  color: var(--c-sub);
+  margin-bottom: 4px;
+}
+
+.subInput {
+  width: 100%;
+  border: 1.5px solid var(--c-line);
+  border-radius: 9px;
+  padding: 7px 9px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-ink);
+  outline: none;
+  background: var(--c-bg);
+}
+
+.subFoot {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--c-faint);
+}
+
+/* 折叠开关 */
+.collapseToggle {
+  margin-top: 7px;
+  font-size: 12px;
+  color: var(--c-sub);
+  padding: 2px 0;
+}
+
+/* 溢出位次覆盖入口 */
+.overrideLink {
+  margin-top: 9px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  text-decoration: underline;
+  padding: 2px 0;
+}
+
+/* 覆盖弹窗输入 */
+.overrideInput {
+  width: 100%;
+  border: 1.5px solid var(--c-line);
+  border-radius: 9px;
+  padding: 9px 11px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-ink);
+  outline: none;
+  margin-top: 8px;
+  background: var(--c-bg);
+}
+
+/* 微调三档档位（禁裸滑杆：分档按钮组） */
+.tuneRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tuneBtn {
+  flex: 1;
+  background: #fff;
+  border: 1.5px solid var(--c-line);
+  border-radius: 11px;
+  padding: 9px 0;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--c-sub);
+}
+
+.tuneBtnOn {
+  background: rgba(45, 156, 219, 0.1);
+  border-color: var(--c-sky);
+  color: var(--c-sky-deep);
+}
+
+/* 预览卡 */
+.previewCard {
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-card);
+  padding: 14px 15px;
+  margin-top: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.previewMeta {
+  margin-top: 8px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+}
+
+/* S2.5 去向示例 */
+.pastTier {
+  margin-top: 10px;
+}
+
+.pastTierLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--c-sky-deep);
+}
+
+.pastItem {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12.5px;
+  color: var(--c-ink);
+}
+
+.pastDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--c-sky);
+  flex-shrink: 0;
+  position: relative;
+  top: -2px;
+}
+
+.pastNote {
+  margin-left: auto;
+  font-size: 10.5px;
+  color: var(--c-faint);
+  flex-shrink: 0;
+}
+
+.demoTag {
+  display: inline-block;
+  font-size: 10.5px;
+  color: var(--c-faint);
+  background: var(--c-bg);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+/* S1 省份网格与选科行 */
+.provinceGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.loadingInline {
+  grid-column: 1 / -1;
+  font-size: 12.5px;
+  color: var(--c-sub);
+  padding: 10px 0;
+}
+
+.trackRow {
+  display: flex;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.pillRow {
+  display: flex;
+  gap: 7px;
+  margin-top: 9px;
+  flex-wrap: wrap;
+}
+
+/* S3 预设卡列表 */
+.presetList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 12px;
+}

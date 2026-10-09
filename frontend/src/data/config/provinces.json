@@ -1,0 +1,27 @@
+{
+  "comment": "静态配置：省份清单与高考模式（随代码发布，修改需回归测试；第⑧步核对后接省配置表）",
+  "provinces": [
+    { "code": "GD", "name": "广东", "online": true, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 45, "baseRatio": [2, 3, 3, 2] },
+    { "code": "HEB", "name": "河北", "online": false, "mode": "3+1+2", "batchMode": "专业+院校", "volunteerLimit": 96, "baseRatio": [2, 3, 3, 2] },
+    { "code": "HEN", "name": "河南", "online": false, "mode": "文理", "batchMode": "院校", "volunteerLimit": 12, "baseRatio": [2, 3, 3, 2] },
+    { "code": "SC", "name": "四川", "online": false, "mode": "文理", "batchMode": "院校", "volunteerLimit": 9, "baseRatio": [2, 3, 3, 2] },
+    { "code": "HUN", "name": "湖南", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 45, "baseRatio": [2, 3, 3, 2] },
+    { "code": "HUB", "name": "湖北", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 45, "baseRatio": [2, 3, 3, 2] },
+    { "code": "JS", "name": "江苏", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 40, "baseRatio": [2, 3, 3, 2] },
+    { "code": "ZJ", "name": "浙江", "online": false, "mode": "3+3", "batchMode": "专业+院校", "volunteerLimit": 80, "baseRatio": [2, 3, 3, 2] },
+    { "code": "FJ", "name": "福建", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 40, "baseRatio": [2, 3, 3, 2] },
+    { "code": "SD", "name": "山东", "online": false, "mode": "3+3", "batchMode": "专业+院校", "volunteerLimit": 96, "baseRatio": [2, 3, 3, 2] },
+    { "code": "CQ", "name": "重庆", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 96, "baseRatio": [2, 3, 3, 2] },
+    { "code": "LN", "name": "辽宁", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 112, "baseRatio": [2, 3, 3, 2] },
+    { "code": "SX", "name": "陕西", "online": false, "mode": "文理", "batchMode": "院校", "volunteerLimit": 12, "baseRatio": [2, 3, 3, 2] },
+    { "code": "GX", "name": "广西", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 40, "baseRatio": [2, 3, 3, 2] },
+    { "code": "JX", "name": "江西", "online": false, "mode": "文理", "batchMode": "院校", "volunteerLimit": 16, "baseRatio": [2, 3, 3, 2] },
+    { "code": "AX", "name": "安徽", "online": false, "mode": "3+1+2", "batchMode": "院校专业组", "volunteerLimit": 45, "baseRatio": [2, 3, 3, 2] }
+  ],
+  "regionTags": {
+    "大湾区": ["广州", "深圳", "佛山", "东莞", "珠海", "中山", "惠州", "江门", "肇庆"],
+    "江浙沪": ["上海", "南京", "苏州", "杭州", "无锡", "宁波", "常州", "南通", "绍兴", "嘉兴"],
+    "京津冀": ["北京", "天津", "廊坊", "保定"]
+  },
+  "regionTagNote": "经济圈标签展开映射（常见口径示意，成员城市待产品最终确认）"
+}

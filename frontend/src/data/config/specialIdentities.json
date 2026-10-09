@@ -1,0 +1,11 @@
+{
+  "comment": "静态配置：特殊身份选项清单（hidden:true 的项 V1 隐藏，艺体类 V1.1 开放——PRD 决策 #2）",
+  "items": [
+    { "id": "national", "label": "国家专项计划", "desc": "面向脱贫地区定向招生", "hidden": false },
+    { "id": "local", "label": "地方专项计划", "desc": "省属重点高校招收农村学生", "hidden": false },
+    { "id": "university", "label": "高校专项计划", "desc": "面向农村和脱贫地区优秀考生", "hidden": false },
+    { "id": "qiangji", "label": "强基计划意向", "desc": "基础学科拔尖人才选拔", "hidden": false },
+    { "id": "ethnic", "label": "少数民族加分", "desc": "按省份政策核定加分值", "hidden": false },
+    { "id": "artSport", "label": "艺术/体育类", "desc": "艺体类综合分公式分省不同，V1.1 开放", "hidden": true }
+  ]
+}

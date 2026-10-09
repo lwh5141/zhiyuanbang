@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build output
+dist/
+frontend/dist/
+build/
+
+# Local env
+*.local
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Graphify output (regenerable)
+graphify-out/
+
+# Scratch / issue tracking (local mode, not used with GitHub)
+.scratch/
+
+# Logs
+npm-debug.log*
+*.log

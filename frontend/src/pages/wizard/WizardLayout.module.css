@@ -1,0 +1,6 @@
+/* 向导壳 */
+.page {
+  min-height: 100vh;
+  background: var(--c-bg);
+  padding-bottom: 40px;
+}

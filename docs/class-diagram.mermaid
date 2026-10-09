@@ -1,0 +1,147 @@
+classDiagram
+    direction LR
+
+    class Profile {
+        +string? province
+        +SubjectCode? track
+        +ElectiveSubject[] electives
+        +number? totalScore
+        +SubScores subScores
+        +number? systemRank
+        +number? rankOverride
+        +boolean rankOverrideConfirmed
+        +string[] specialIdentities
+    }
+    class Preferences {
+        +WeightPreset? weightPreset
+        +TuneLevel tune
+        +string[] expectedRegions
+        +string[] excludedRegions
+        +string[] majorBlacklist
+        +SchoolFloor schoolFloor
+        +string ownership
+    }
+    class Draft {
+        +number version
+        +number step
+        +Profile profile
+        +Preferences preferences
+        +string updatedAt
+    }
+    class Plan {
+        +Candidate[] candidates
+        +Record~Gradient,number~ gradientStats
+        +number[4] ratio
+        +number blacklistBlocked
+        +DegradeStep[] degraded
+        +number completeness
+        +boolean isEstimate
+        +string[] noMatchReasons
+    }
+    class Candidate {
+        +string id
+        +string school
+        +string majorGroup
+        +string major
+        +string city
+        +string tier
+        +string[] majorsInGroup
+        +number[2] probability
+        +Gradient gradient
+        +number confidence
+        +string[] tags
+        +Evidence evidence
+    }
+    class Evidence {
+        +string pastRanks
+        +string peerCount
+        +string planCount
+        +string factors
+        +string source
+    }
+    class LlmParseRequest {
+        +string text
+        +string? province
+        +WeightPreset? preset
+    }
+    class LlmParseResponse {
+        +string code
+        +LlmIntention? data
+        +string? message
+    }
+
+    Profile --> "1" Draft : 组成
+    Preferences --> "1" Draft : 组成
+    Evidence --> "1..*" Candidate : 组成
+    Candidate --> "0..*" Plan : 组成
+
+    class StorageAdapter {
+        <<interface>>
+        +load() Promise~Draft|null~
+        +save(Draft) Promise~void~
+        +clear() Promise~void~
+    }
+    class LocalStorageAdapter {
+        +load() Promise~Draft|null~
+        +save(Draft) Promise~void~
+        +clear() Promise~void~
+    }
+    class draftStore {
+        +debounceSave(Draft)
+        +migrate(raw) Draft
+    }
+    StorageAdapter <|.. LocalStorageAdapter : 实现
+    draftStore --> StorageAdapter : 使用
+
+    class RankEngine_rankLookup {
+        <<engine 纯函数模块>>
+        +rankLookup(score, table) RankResult?
+    }
+    class ProbabilityEngine {
+        <<engine 纯函数模块>>
+        +classifyGradient(p) Gradient
+    }
+    class BlacklistEngine {
+        <<engine 纯函数模块>>
+        +filterBlacklist(cands, blacklist)
+    }
+    class DegradeEngine {
+        <<engine 纯函数模块>>
+        +degrade(cands, prefs, min)
+    }
+    class CompletenessEngine {
+        <<engine 纯函数模块>>
+        +score(profile, prefs) number
+    }
+    class PlanBuilder {
+        <<engine 编排>>
+        +buildPlan(profile, prefs, pool) Plan
+    }
+    PlanBuilder --> BlacklistEngine : 过滤
+    PlanBuilder --> DegradeEngine : L1/L2放宽
+    PlanBuilder --> ProbabilityEngine : 梯度判定
+    PlanBuilder --> CompletenessEngine : 完整度
+    PlanBuilder ..> Plan : 产出
+    RankEngine_rankLookup ..> Candidate : 位次输入
+
+    class provinceService { +getProvinces() Promise }
+    class rankService { +lookupRank() Promise }
+    class candidateService { +fetchCandidates() Promise }
+    class planService { +buildPlan() Promise }
+    class llmService { +parseIntention(LlmParseRequest) Promise~LlmParseResponse~ }
+    class sampleService { +fetchPastPlans(rank) Promise }
+    rankService --> RankEngine_rankLookup : 调用
+    planService --> PlanBuilder : 调用
+    llmService ..> LlmParseResponse : 返回schema
+
+    class AppContext {
+        <<React Context+Reducer>>
+        +AppProvider
+        +useApp() Draft+dispatch
+        +UPDATE_PROFILE
+        +UPDATE_PREFS
+        +GOTO_STEP
+        +RESET
+    }
+    AppContext --> draftStore : 持久化
+    AppContext ..> Draft : 状态

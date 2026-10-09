@@ -1,0 +1,89 @@
+/* 黑名单拦截确认页（警示橙色系，明示不可绕过） */
+.gate {
+  background: rgba(255, 159, 67, 0.08);
+  border: 1.5px solid rgba(255, 159, 67, 0.4);
+  border-radius: var(--radius-card);
+  padding: 16px 16px 14px;
+  margin-top: 12px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #c96f14;
+}
+
+.desc {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--c-ink);
+  line-height: 1.65;
+}
+
+.list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.item {
+  background: #fff;
+  border: 1px solid rgba(255, 159, 67, 0.35);
+  border-radius: 11px;
+  padding: 9px 12px;
+}
+
+.school {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--c-ink);
+}
+
+.major {
+  font-size: 11.5px;
+  color: var(--c-sub);
+  margin-top: 2px;
+}
+
+.hitRow {
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: #c96f14;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.removeBtn {
+  margin-top: 14px;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid var(--c-rush);
+  color: #c96f14;
+  border-radius: var(--radius-btn);
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.continueBtn {
+  margin-top: 9px;
+  width: 100%;
+  background: var(--c-sky);
+  color: #fff;
+  border-radius: var(--radius-btn);
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+}
+
+.note {
+  margin-top: 9px;
+  font-size: 11px;
+  color: var(--c-faint);
+  line-height: 1.55;
+  text-align: center;
+}

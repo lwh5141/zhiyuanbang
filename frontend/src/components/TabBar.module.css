@@ -1,0 +1,36 @@
+/* 底部三 Tab（原型 TabBar 同参数） */
+.bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  height: 84px;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid var(--c-line);
+  display: flex;
+  padding-top: 9px;
+  z-index: 15;
+  backdrop-filter: blur(8px);
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-decoration: none;
+}
+
+.label {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--c-icon-muted);
+}
+
+.active .label {
+  font-weight: 700;
+  color: var(--c-sky-deep);
+}

@@ -1,0 +1,55 @@
+sequenceDiagram
+    actor U as 用户
+    participant W as Wizard步骤组件<br/>(Step1Location/Step2Score…)
+    participant C as AppContext<br/>(useReducer)
+    participant DS as draftStore<br/>→StorageAdapter
+    participant S as services层<br/>(async, 模拟后端)
+    participant E as engine纯函数层
+    participant P as PlanPage/BlacklistGate
+
+    Note over W,DS: 全程每步变更即时落库（REQ-003，断点续填）
+    U->>W: 输入省份/选科/总分
+    W->>W: 前端即时校验（再选恰2门/0-750/<100二次确认）
+    W->>C: dispatch(UPDATE_PROFILE)
+    C->>DS: saveDraft(draft) 防抖500ms
+    DS->>DS: localStorage.setItem
+
+    W->>S: rankService.lookup(province, track, score)
+    S->>E: rankLookup(分数, scoreRank.gd.json)
+    E-->>S: { rank, percentile, source原文 }
+    S-->>W: 位次+解读文案+证据条数据
+    Note over W: REQ-002 证据展示<br/>覆盖位次→Modal二次确认(>500勾声明)
+
+    U->>W: S3选择权重预设/微调档
+    W->>S: sampleService 预览配比(ratio.ts×thresholds.json)
+    S-->>W: 实时刷新配比条与分布预览(REQ-004)
+
+    U->>W: S4自然语言意向输入
+    W->>S: llmService.parseIntention(text)
+    S->>S: 1.2-2s延迟+关键词解析+白名单校验
+    alt 解析成功
+        S-->>W: LlmParseResponse{OK, data}
+        W->>U: 结构化确认卡(地域/黑名单/权重)
+    else 解析失败
+        S-->>W: {PARSE_FAILED}
+        W->>U: 回退表单补填(REQ-006 不阻塞)
+    end
+
+    U->>W: S5特殊身份勾选 → 提交方案
+    W->>S: planService.buildPlan(profile, preferences)
+    S->>E: filterBlacklist(candidates, 黑名单)
+    E-->>S: { blocked, surviving }
+    S->>E: degrade(surviving, prefs, 45)  L1→L2按序放宽
+    E-->>S: { candidates, degradeSteps }
+    S->>E: planBuilder 概率/四梯度/配比排序
+    E-->>S: Plan{gradientStats 2:3:3:2, completeness}
+    S-->>P: Plan(含 degraded 明示记录)
+
+    alt blacklistBlocked > 0
+        P->>U: BlacklistGate硬拦截确认页(不可绕过)
+        U->>P: 移出黑名单 或 继续拦截
+    end
+    alt candidates = 0
+        P->>U: NoMatchDiagnosis诊断页(禁止静默降级)
+    end
+    P->>U: 渲染四梯度统计+志愿卡(EvidenceBar展开)+ComplianceNote合规标注

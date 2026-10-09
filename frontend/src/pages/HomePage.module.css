@@ -1,0 +1,218 @@
+/* 首页（原型 HomeScreen 逐段平移） */
+.page {
+  min-height: 100%;
+  background: var(--c-bg);
+  padding-bottom: 96px;
+}
+
+/* ① Hero */
+.hero {
+  background: var(--grad-sky);
+  padding: 26px 24px 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  filter: blur(1px);
+}
+
+.cloudA {
+  top: 30px;
+  right: -26px;
+  width: 120px;
+  height: 44px;
+}
+
+.cloudB {
+  top: 78px;
+  right: 66px;
+  width: 74px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.plane {
+  position: absolute;
+  top: 16px;
+  right: 118px;
+  opacity: 0.92;
+}
+
+.countdownLabel {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.countdown {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.days {
+  color: #fff;
+  font-size: 66px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-shadow: 0 2px 14px rgba(14, 76, 119, 0.18);
+}
+
+.dayUnit {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.brandBlock {
+  margin-top: 10px;
+}
+
+.brand {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.slogan {
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 14.5px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.cta {
+  margin-top: 20px;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  padding: 15px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-hero-cta);
+  text-align: left;
+}
+
+.ctaTitle {
+  font-size: 17.5px;
+  font-weight: 700;
+  color: var(--c-sky-ink);
+}
+
+.ctaSub {
+  font-size: 12.5px;
+  color: var(--c-sub);
+  margin-top: 3px;
+}
+
+.ctaIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--c-sky);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 区块通用 */
+.section {
+  padding: 14px var(--pad-page) 0;
+}
+
+.blockTitle {
+  font-size: 15.5px;
+  font-weight: 800;
+  color: var(--c-ink);
+}
+
+.blockSub {
+  font-size: 12.5px;
+  color: var(--c-sub);
+  margin-top: 3px;
+}
+
+.blockMeta {
+  font-size: 11.5px;
+  color: var(--c-sub);
+}
+
+.rowBetween {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+/* ② 断点续填卡 */
+.draftCard {
+  width: 100%;
+  background: rgba(39, 196, 147, 0.1);
+  border: 1px solid rgba(39, 196, 147, 0.35);
+  border-radius: var(--radius-card);
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+}
+
+.draftIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--c-mint);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.draftText {
+  flex: 1;
+  min-width: 0;
+}
+
+.draftTitle {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--c-mint-deep);
+}
+
+.draftSub {
+  font-size: 12.5px;
+  color: var(--c-sub);
+  margin-top: 2px;
+}
+
+/* ③ 证据条示例 */
+.sampleWrap {
+  margin-top: 10px;
+}
+
+.evToggle {
+  margin-top: 8px;
+  width: 100%;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  padding: 4px 0;
+}
+
+/* 首发省份说明 */
+.footerNote {
+  padding: 16px var(--pad-page) 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--c-sub);
+}

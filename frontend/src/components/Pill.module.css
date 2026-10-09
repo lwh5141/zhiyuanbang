@@ -1,0 +1,10 @@
+/* 信息胶囊（原型方案页顶部标签同参数） */
+.pill {
+  background: #fff;
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  font-weight: 600;
+}

@@ -1,0 +1,70 @@
+/* 候选=0 诊断页 */
+.diag {
+  background: var(--c-card);
+  border: 1.5px solid rgba(217, 83, 79, 0.35);
+  border-radius: var(--radius-card);
+  padding: 18px 16px 14px;
+  margin-top: 16px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--c-danger);
+}
+
+.desc {
+  margin-top: 8px;
+  font-size: 12.5px;
+  color: var(--c-ink);
+  line-height: 1.65;
+}
+
+.reasonList {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reasonItem {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  background: var(--c-bg);
+  border-radius: 9px;
+  padding: 8px 11px;
+  font-size: 12.5px;
+  color: var(--c-ink);
+  line-height: 1.6;
+}
+
+.reasonDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 2px;
+  background: var(--c-danger);
+  flex-shrink: 0;
+  position: relative;
+  top: -2px;
+}
+
+.backBtn {
+  margin-top: 14px;
+  width: 100%;
+  background: var(--c-sky);
+  color: #fff;
+  border-radius: var(--radius-btn);
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: var(--shadow-btn);
+}
+
+.note {
+  margin-top: 9px;
+  font-size: 11px;
+  color: var(--c-faint);
+  line-height: 1.55;
+  text-align: center;
+}

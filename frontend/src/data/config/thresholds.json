@@ -1,0 +1,51 @@
+{
+  "comment": "静态配置：引擎口径与阈值（40/75/95 阈值、2:3:3:2 基准配比、45 志愿、L1→L2 降级顺序等只在此维护，代码零硬编码）",
+  "probability": {
+    "rushBelow": 40,
+    "stableBelow": 75,
+    "safeBelow": 95,
+    "note": "概率口径：冲 <40% / 稳 40–75% / 保 75–95% / 垫 >95%（PRD 9.2）"
+  },
+  "probabilityInterval": 8,
+  "probabilityIntervalNote": "概率置信区间半宽（百分点），mock 阶段简化口径",
+  "baseRatio": [2, 3, 3, 2],
+  "baseRatioNote": "基准配比 冲:稳:保:垫 ≈ 2:3:3:2",
+  "presetRatios": {
+    "保专业": [[2, 3, 3, 2], [1, 3, 4, 2], [1, 2, 4, 3]],
+    "保学校": [[2, 3, 3, 2], [3, 4, 2, 1], [4, 4, 1, 1]],
+    "保城市": [[2, 3, 3, 2], [2, 4, 3, 1], [3, 4, 2, 1]]
+  },
+  "presetRatiosNote": "每个预设三档数组依次为 [标准(tune0), 偏向(tune1), 强偏向(tune2)]，内部顺序均为 [冲,稳,保,垫]，总和 10",
+  "degrade": {
+    "order": ["L1", "L2"],
+    "descriptions": {
+      "L1": "放开院校层次下限（含公办/民办偏好）",
+      "L2": "扩大地域范围（暂不限制期望与排斥地域）"
+    },
+    "note": "降级按固定顺序 L1→L2，全程明示；专业黑名单为绝对约束，任何情况下不进入降级（PRD 决策 #6）"
+  },
+  "confidence": {
+    "base": 70,
+    "noHistoryPenalty": 25,
+    "planChangePenalty": 10,
+    "min": 30
+  },
+  "rankFallback": {
+    "rank": 168000,
+    "percentile": 13,
+    "note": "低于示意映射表最低分时的兜底位次（演示口径）"
+  },
+  "completenessWeights": {
+    "province": 10,
+    "track": 10,
+    "electives": 10,
+    "totalScore": 20,
+    "subScores": 5,
+    "systemRank": 15,
+    "weightPreset": 15,
+    "expectedRegions": 5,
+    "majorBlacklist": 5,
+    "specialIdentities": 5,
+    "note": "信息完整度评分字段权重表（总和 100），引擎按表驱动计算"
+  }
+}
