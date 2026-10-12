@@ -1,0 +1,101 @@
+/* ============================================================
+   全局基础样式：reset / 系统字体栈 / 触感反馈 / 进场动画
+   ============================================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sys);
+  background: #eaf3f9;
+  color: var(--c-ink);
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(45, 156, 219, 0.22);
+}
+
+/* 移动端壳：桌面浏览器里居中呈现手机宽度 */
+#root {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--c-bg);
+  position: relative;
+  box-shadow: 0 0 40px rgba(22, 50, 74, 0.08);
+}
+
+/* 触感反馈：hover 微降亮 + 按压缩放（原型 .tap 同参数） */
+.tap {
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tap:hover {
+  filter: brightness(0.97);
+}
+.tap:active {
+  transform: scale(0.965);
+}
+
+/* 页面进场动画（原型 .screen-in 同参数） */
+.screen-in {
+  animation: screenIn 0.3s cubic-bezier(0.22, 0.8, 0.36, 1) both;
+}
+@keyframes screenIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Toast 浮层进场 */
+.toast-in {
+  animation: toastIn 0.24s ease both;
+}
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* 数字一律等宽（原型规格：数字 tabular-nums） */
+.num {
+  font-variant-numeric: tabular-nums;
+}

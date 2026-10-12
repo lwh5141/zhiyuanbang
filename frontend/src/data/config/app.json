@@ -1,0 +1,46 @@
+{
+  "comment": "静态配置：应用元数据、Wizard 结构、校验边界与计时参数（前端常量，随代码发布；非后端返回）",
+  "brand": {
+    "name": "志愿帮",
+    "slogan": "你只管确认，翻译交给我们"
+  },
+  "examDate": "2027-06-07T00:00:00+08:00",
+  "launchProvince": {
+    "code": "GD",
+    "name": "广东"
+  },
+  "wizard": {
+    "collectionSteps": 5,
+    "validSteps": [1, 2, 3, 4, 5, 6],
+    "stepNames": {
+      "1": "省份与选科",
+      "2": "分数确认",
+      "3": "意向预设",
+      "4": "意向细化",
+      "5": "特殊身份"
+    }
+  },
+  "validation": {
+    "scoreMin": 0,
+    "scoreMax": 750,
+    "lowScoreConfirmBelow": 100,
+    "subScoreMax": 150,
+    "electiveRequired": 2,
+    "rankOverrideDiffThreshold": 500,
+    "note": "分数与选科校验边界；位次覆盖偏差阈值 500"
+  },
+  "timing": {
+    "toastDurationMs": 1900,
+    "draftDebounceMs": 500,
+    "subScoresDebounceMs": 300,
+    "llmDelayMs": [1200, 2000],
+    "serviceDelayMs": {
+      "provinces": 280,
+      "rankLookup": 300,
+      "candidates": 320,
+      "plan": 260,
+      "pastPlans": 280
+    },
+    "note": "计时参数：Toast 时长、草稿防抖、单科防抖为 UI 常量；llmDelayMs/serviceDelayMs 为 mock 后端延迟，第⑩步接真实后端后删除"
+  }
+}

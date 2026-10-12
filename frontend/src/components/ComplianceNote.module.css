@@ -1,0 +1,8 @@
+/* 合规标注（原型方案页页脚同参数） */
+.note {
+  margin-top: 16px;
+  font-size: 11.5px;
+  color: var(--c-sub);
+  line-height: 1.6;
+  text-align: center;
+}

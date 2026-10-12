@@ -1,0 +1,5 @@
+/* App 根组件：三 Tab 页底部预留 TabBar 高度 */
+.tabPage {
+  min-height: 100vh;
+  padding-bottom: 96px;
+}

@@ -1,0 +1,10 @@
+{
+  "comment": "静态配置：四梯度定义（展示顺序 + CSS 变量配色；数值阈值见 thresholds.json）",
+  "order": ["冲", "稳", "保", "垫"],
+  "colors": {
+    "冲": "var(--c-rush)",
+    "稳": "var(--c-stable)",
+    "保": "var(--c-safe)",
+    "垫": "var(--c-base)"
+  }
+}

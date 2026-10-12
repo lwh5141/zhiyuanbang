@@ -1,0 +1,20 @@
+{
+  "comment": "静态配置：Mock LLM 关键词解析规则（第⑩步接入真实大模型后本文件退役；输出 schema 与白名单不变）",
+  "negationPattern": "不想去|别去|不去|不要去|排除|避开|远离|离开",
+  "majorRules": [
+    { "pattern": "医学|学医|医院|从医", "entries": ["临床医学类"] },
+    { "pattern": "护理|护士", "entries": ["护理类"] },
+    { "pattern": "药学|制药|药剂", "entries": ["药学类"] },
+    { "pattern": "师范|当老师|当教师|教书|不想教书|怕当老师", "entries": ["师范类"] },
+    { "pattern": "法学|律师|司法", "entries": ["法学类"] },
+    { "pattern": "土木|工地|施工", "entries": ["土木类"] },
+    { "pattern": "化工|化学工程", "entries": ["化工与制药类"] },
+    { "pattern": "生物工程|生物技术|学生物", "entries": ["生物类"] },
+    { "pattern": "材料科学|材料工程|学材料", "entries": ["材料类"] }
+  ],
+  "presetRules": [
+    { "pattern": "保专业|专业优先|专业为主|看重专业", "preset": "保专业" },
+    { "pattern": "保学校|学校优先|名校|看重学校|看学校", "preset": "保学校" },
+    { "pattern": "保城市|城市优先|大城市|去大城市|看重城市", "preset": "保城市" }
+  ]
+}

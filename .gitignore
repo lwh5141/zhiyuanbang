@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════════
+# 本仓库为公开发布版。以下内容不入库，只保留在本地工作区。
+# ═══════════════════════════════════════════════════════════════
+
+# ── 业务资产：数据 / 设计 / 方案（核心资产，不外发）──
+高考志愿填报数据库/
+志愿帮-首页原型/
+prd-*.md
+RAG系统方案.md
+RAG系统方案-图解.html
+志愿填报APP.md
+CONTEXT.md
+openspec/
+
+# ── 项目文档中不宜公开的部分（保留 docs/agents/）──
+docs/adr/
+docs/system_design.md
+docs/class-diagram.mermaid
+docs/sequence-diagram.mermaid
+
+# ── 本地 agent 工作痕迹（个人环境与协作记忆）──
+.workbuddy/
+.agents/
+.scratch/
+
+# ── 构建产物与缓存（误提交物，勿入库）──
+frontend/tsconfig.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+dist/
+frontend/dist/
+build/
+graphify-out/
+
+# ── 依赖 ──
+node_modules/
+frontend/node_modules/
+
+# ── 本地环境变量（绝不入库）──
+.env
+.env.local
+*.local
+
+# ── 日志 ──
+npm-debug.log*
+*.log
+
+# ── OS / IDE ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
